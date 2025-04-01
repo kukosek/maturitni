@@ -1,0 +1,148 @@
+- hardware
+	- úvod
+		- cíl: low cost
+		- použito co bylo doma v šuplíku
+
+	- volba platformy 
+		- úvod
+			- stručně
+			- několik možností
+		- raspberry pi 5
+			- výhody
+				- neměl jsem pro něho využití
+				- nízká spotřeba energie (procesor ARM)
+			- nevýhody
+				- nemá SATA porty
+				- potřeba navrhnout a vytisknout case na 3D tiskárně
+		- server x86
+			- výhody
+				- SATA porty na základní dese
+				- spolehlivost
+				- navržen pro toto využití
+				- rozšiřitelnost
+				- virtualizace
+			- nevýhody
+				- vyšší spotřeba energie
+				- vysoká cena
+				- u starších vysoká spotřeba energie
+				- asi overkill pro náš účel
+			- odkazy:
+				- serverbuilds.net
+					- návod, jaké komponenty vybrat
+					- dobrá sestava za dobrý peníz
+					- pro mně nemyslitelné, protože do toho nechci dávat tolik peněz
+					- https://forums.serverbuilds.net/t/guide-nas-killer-6-0-ddr4-is-finally-cheap/13956
+				- r/homeserver
+					- komunita zaměřená na stavbu serverů pro domácí
+					  použití
+					- https://www.reddit.com/r/HomeServer/
+		- NAS zařízení
+			- např. Synology, QNAP
+			- výhody
+				- jednoduchost
+				- nízká náročnost zapojení
+				- funguje hned po zapojení 
+				- není třeba volit zálohovací software
+				- zařízení má software zabudovaný a nastavené
+			- nevýhody
+				- proprietární software
+				- vendor lock
+				- nemožnost rozšíření 
+				- nic nového se nenaučíte
+		- závěr
+			- vybral jsem si raspberry pi 5, protože jsem ho měl doma
+
+	- jak připojit disk k RPI 5?
+		- shrnout možnosti připojení disků k RPI 5
+		- výhody a nevýhody u každé možnosti
+		- SATA rozšiřovací HAT
+			- Suptronics - X1009 PCIe to 5-port SATA HDD Shield
+			- výhody
+				- asi stabilita
+				- rozšiřitelnost
+				- možnost zapojit více disků -> RAID
+			- nevýhody
+				- cena
+				- nutnost navrhnout krabici s držákama na disky a RPI
+		- zvolil jsem USB dokovací stanici
+			- AXAGON ADSA-SN, USB 3.2 Gen1 - SATA 6G, 2.5"/3.5" HDD/SSD dokovací stanice
+			- výhody:
+				- měl jsem ji doma
+				- nepotřebuje drivery
+			- nevýhody
+				- při zapnutí je ve výchozím modu vypnutý disk, 
+				- je potřeba spustit disk stisknutím tlačítka
+				- možnost připojit jen 1 disk
+				- nemožné připojit 2 disky v režimu RAID
+	- návrh držáku na RPI
+		- potřeboval jsem spojit dockovací stanici s RPI 
+		- potřeba dát RPI do krabičky kvůli riziku poškození nebo zkratu
+		- navrhl jsem objímku v programu Autodesk Fusion 360
+		- tu jsem spojil s krytem na RPI, který jsem stáhnul na internetu
+		- výhody
+			- vzhled samotné krabičky na RPI
+		- nevýhody
+			- Cable management
+			- neúhlednost
+			- málo to drží, tím že je kryt zacvakávací
+			- lepší by byl šrubovací
+		- obrázek
+		- https://thepihut.com/blogs/raspberry-pi-roundup/3d-printed-raspberry-pi-5-cases
+		- https://www.printables.com/model/705427-retro-raspberry-pi-5-case-snap-fit
+	- zálohovací software
+		- UNRAID
+			- výhody
+				- komplexní systém pro NAS
+				- rozšiřitelnost
+			- nevýhody
+				- proprietární 
+				- nutnost koupit licensi 
+				- nepodporuje raspberry pi 
+		- Open source
+			- Restic
+			- BorgBackup
+			- Duplicati
+				- výhody
+					- kvalitní GUI
+				- nevýhody
+					- nestabilita
+			- Kopia
+				- výhody
+					- rychlost
+					- populární na GitHubu
+					- aktivní vývoj
+					- kvalitní kod
+					- podpora cloudů a google drive
+					- jednoduché CLI příkazy
+					- šifrování
+				- nevýhody
+					- GUI nemá všechny funkce
+					- scheduling pouze v GUI
+					
+		- Závěr
+			- zvolil jsem Kopiu, protože je momentálně populární
+			- komunita na internetu
+			- možnosti šifrování
+			- připojení ke Googlu Drive
+
+- konfigurace
+	- monitoring
+		- potřeba posílat info o tom, jak funguje backup 
+		- zkusit toto https://github.com/ekutner/kopia-mon
+		- do budoucna
+	- kopia 
+		- nejjednodušší: nastavit v Kopia UI 
+		- spuštění kopia UI při startu, aby běželo jako daemon
+		- připojení k raspberry Pi přes SFTP
+		- nefungoval interní SFTP klient Kopia
+		- povolil jsem šifrování i kompresy
+		- po restartu píše Kopia chyby, že nemůže najít soubory repozitáře
+
+- první záloha
+	- 900 GB 
+	- trvalo to asi 11 hodin
+	- překvapilo mě, jak je to rychlé
+
+- do budoucna 
+	- otestovat funkčnost zálohy 
+	- stabilnější server a uložiště
