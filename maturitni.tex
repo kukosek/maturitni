@@ -5,6 +5,8 @@
 	% Plugin na sloupce
 	\usepackage{multicol}
 
+	\usepackage{wrapfig}
+
 	% Plugin na obrazky
 	\usepackage{graphicx}
 
@@ -48,7 +50,7 @@
 	\pagestyle{empty}
 	\fancypagestyle{plain}{}
 
-\begin{document}
+	\begin{document}
 
 % Zrusi cislovani na zacatecnich strankach
 \pagenumbering{gobble}
@@ -152,23 +154,49 @@ se cíl práce podařilo splnit.
 
 \chapter{Úvod}
 
-V éře digitálních informací, kdy data představují klíčový aspekt osobního i
-profesního života, nabývá problematika jejich ochrany na zásadním významu.
-Ztráta dat, ať už v důsledku hardwarové poruchy, softwarové chyby, nebo
-hackerského útoku, může mít fatální následky. Proto je nezbytné implementovat
-efektivní a spolehlivé strategie zálohování.
+Často opomíjené, ale v počítačových systémech nutné - to je zálohování.
+Mnozí z nás uchovávají data na svém vlastním uložišti. Ať už to jsou
+fotky z dovolených nebo cenné pracovní dokumenty, mají pro nás vysokou hodnotu
+a proto o ně nechceme přijít. Máte vytvořenou zálohu svých dat? 
 
-Následující kapitoly detailně popisují
-proces výběru hardwaru, způsob připojení disku, návrh držáku a softwarovou
-konfiguraci systému.
+Lidé jsou zvyklí ukládat své data na USB disky. Ruční zálohování má však své limity,
+proto se pojďmě podívat na způsob, jak dělat zálohování poctivě.
 
 
 \section{Vlastní motivace}
 
-Motivací pro vytvoření tohoto systému byla snaha o vytvoření zálohy mého
-domácího PC, na kterém uchovávám mnoho cenných dat.
-Jedná se asi o 1 TB fotek a videí. Tyto data mám na HDD, které
-slouží již 10 let. Proto se bojím, že brzy přestane fungovat. 
+Motivací pro napsání této práce byla nutnost vytvoření zálohy mého
+domácího PC. Uchovávám na něm mnoho cenných dat -
+jedná se asi o 1 TB fotek a videí. Tyto data mám na HDD, které
+slouží již 10 let. Je na konci své životnosti a já nechci přijít o data,
+které na něm uchovávám. Proto jsem se rozhodl vytvořit funkční systém 
+pro zálohování.
+
+\section{Cíle projektu}
+
+Moje požadavky pro zálohovací systém byly následující. V závěru práce zhodnotíme, 
+jestli se podařily splnit.
+
+\begin{enumerate}
+	\item Automatizace - Zálohy se vytváří automaticky ve stanovených intervalech
+	\item Nízká cena - co nejmenší počáteční i provozní náklady
+	\item Spolehlivost - systém nevykazuje chyby
+	\item Transparentnost - můžu sledovat průběh zálohování
+	\item Error handling - chybové záznamy jdou jednoduše přečíst
+\end{enumerate}
+
+\section{Cloud vs On-Premise}
+
+Na trhu je mnoho cloudových řešení pro zálohování. 
+Ať už to jsou známé služby jako Google Drive a OneDrive, nebo 
+levnější alternativa v podobě Backblaze Backup, cloudové společnosti poskytují 
+spolehlivé řešení pro potřeby zálohování. Cena těchto služeb je však vysoká a pro moje účely nevýhodná. 
+
+Kvůli vysoké ceně jsem se rozhodl vytvořit vlastní hardwarové řešení na
+zálohování (On-Premise).
+Následující kapitoly popisují
+proces výběru hardwaru, způsob připojení disku, návrh držáku a softwarovou
+konfiguraci systému.
 
 
 \chapter{Hardware}
@@ -190,6 +218,11 @@ v klidovém stavu pohybuje mezi 2.2W a 3.4W, přičemž při zátěži dosahuje
 přibližně 8.9W až 9.8W . Tato nízká spotřeba přispívá k nižším provozním
 nákladům systému v dlouhodobém horizontu, což dále podporuje myšlenku
 nízkonákladového řešení.  
+
+\begin{wrapfigure}{r}{0.25\textwidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{img/rpi5-active-cooler.jpg}
+\end{wrapfigure}
 
 Na druhou stranu, Raspberry Pi 5 má i své nevýhody. Mezi nejvýznamnější patří
 absence nativních SATA portů, které jsou standardním rozhraním pro připojení
@@ -301,10 +334,22 @@ stanice do jednoho celku. K tomuto účelu bylo nutné navrhnout speciální dr�
 Dalším důležitým aspektem byla ochrana samotného Raspberry Pi 5 před mechanickým
 poškozením a zkraty, což vyžadovalo umístění desky do nějakého pouzdra.
 
+\begin{figure}[h]
+\caption{Example of a parametric plot ($\sin (x), \cos(x), x$)}
+\centering
+\includegraphics[width=0.5\textwidth]{img/dily-zvlast.jpg}
+\end{figure}
+
 Pro návrh držáku jsem použil program Autodesk Fusion 360. V tomto softwaru jsem
 vytvořil objímku, která je navržena tak, aby pevně držela USB dokovací stanici.
 Tuto vlastní navrženou objímku jsem následně spojil s existujícím krytem pro
 Raspberry Pi 5, který jsem stáhnul z internetu. 
+
+\begin{figure}[H]
+\caption{Example of a parametric plot ($\sin (x), \cos(x), x$)}
+\centering
+\includegraphics[width=0.9\textwidth]{img/skladani4.jpg}
+\end{figure}
 
 Použití hotového krytu pro Raspberry Pi mělo tu výhodu, že již zajišťoval
 základní ochranu desky a měl esteticky přijatelný vzhled. Nevýhodou tohoto
@@ -359,6 +404,7 @@ zálohování.
 
 
 \chapter{Seznam obrázků}
+\listoffigures
 
 
 \chapter{Seznam příloh}
