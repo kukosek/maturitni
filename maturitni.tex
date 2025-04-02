@@ -36,6 +36,12 @@
 	\author{Lukáš Dulík}
 	\date{\today} % Tady sa pak moze nastavit jine datum, ted to da vzdycky aktualni
 
+	\makeatletter
+	\let\newtitle\@title
+	\let\newauthor\@author
+	\let\newdate\@date
+	\makeatother
+
 
 	% Plugin na zahlavi zapati
 	\usepackage{fancyhdr}
@@ -113,11 +119,18 @@
 
 
 \noindent
-Prohlašuji, že jsem maturitní práci vypracoval samostatně
-a výhradně s použitím citovaných pramenů.
 
-Ve Slavičíně: dne datum jméno, vlastnoruční podpis
+Prohlašuji, že tato závěrečná maturitní práce je mým původním autorským dílem, které jsem vypracoval samostatně. Všechny zdroje, prameny a literaturu, které jsem při vypracování používal nebo z nich čerpal, v práci řádně cituji s uvedením úplného odkazu na příslušný zdroj.
 
+\begin{center}
+Ve Slavičíně
+
+\newdate
+
+\vspace{10mm}
+
+\newauthor
+\end{center}
 
 \newpage
 \section*{Abstrakt}
@@ -145,12 +158,16 @@ se cíl práce podařilo splnit.
 \newpage
 \section*{Poděkování}
 
+Děkuji vedoucímu práce Michalu Botkovi za konzultace týkající 
+se psaní této práce. 
+
 % Udela obsah
 \tableofcontents
 
 \clearpage
 % Zacatek cislovani stranek
 \pagenumbering{arabic}
+\pagestyle{fancy}
 
 \chapter{Úvod}
 
@@ -219,10 +236,10 @@ přibližně 8.9W až 9.8W . Tato nízká spotřeba přispívá k nižším prov
 nákladům systému v dlouhodobém horizontu, což dále podporuje myšlenku
 nízkonákladového řešení.  
 
-\begin{wrapfigure}{r}{0.25\textwidth}
+\begin{wrapfigure}{r}{0.4\textwidth}
 	\centering
-	\includegraphics[width=0.25\textwidth]{img/rpi5-active-cooler.jpg}
-	\caption{Amazon categories after a search}
+	\includegraphics[width=0.4\textwidth]{img/rpi5-active-cooler-c.jpg}
+	\caption{RPi 5 s aktivním chladičem}
 \end{wrapfigure}
 
 Na druhou stranu, Raspberry Pi 5 má i své nevýhody. Mezi nejvýznamnější patří
@@ -336,7 +353,7 @@ Dalším důležitým aspektem byla ochrana samotného Raspberry Pi 5 před mech
 poškozením a zkraty, což vyžadovalo umístění desky do nějakého pouzdra.
 
 \begin{figure}[h]
-\caption{Example of a parametric plot ($\sin (x), \cos(x), x$)}
+\caption{Díly vytišténé na 3D tiskárně}
 \centering
 \includegraphics[width=0.5\textwidth]{img/dily-zvlast.jpg}
 \end{figure}
@@ -347,7 +364,7 @@ Tuto vlastní navrženou objímku jsem následně spojil s existujícím krytem 
 Raspberry Pi 5, který jsem stáhnul z internetu. 
 
 \begin{figure}[h]
-\caption{Example of a parametric plot ($\sin (x), \cos(x), x$)}
+\caption{Sestavená zálohovací stanice}
 \centering
 \includegraphics[width=0.9\textwidth]{img/skladani4.jpg}
 \end{figure}
@@ -398,13 +415,9 @@ zálohování.
 \chapter{Závěr}
 
 
-\chapter{Seznam použité literatury}
-
-\chapter{Seznam odkazů}
+\chapter{Seznam zdrojů}
 
 
-
-\chapter{Seznam obrázků}
 \listoffigures
 
 
