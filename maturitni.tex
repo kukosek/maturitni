@@ -2,10 +2,15 @@
 	\usepackage[czech]{babel}
 	\usepackage[utf8]{inputenc}
 
+		\DeclareUnicodeCharacter{202F}{FIX ME!!!!}
+
 	% Plugin na sloupce
 	\usepackage{multicol}
 
 	\usepackage{wrapfig}
+
+	\usepackage{listings}
+	\usepackage{xcolor}
 
 	% Plugin na obrazky
 	\usepackage{graphicx}
@@ -55,6 +60,37 @@
 	% Dulezite pro spravne zobrazovani zahlavi zapati
 	\pagestyle{empty}
 	\fancypagestyle{plain}{}
+
+
+
+	% Zobrazování kódu
+	\definecolor{codegreen}{rgb}{0,0.6,0}
+	\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+	\definecolor{codepurple}{rgb}{0.58,0,0.82}
+	\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+	\lstdefinestyle{codestyle}{
+		backgroundcolor=\color{backcolour},   
+		commentstyle=\color{codegreen},
+		keywordstyle=\color{magenta},
+		numberstyle=\tiny\color{codegray},
+		stringstyle=\color{codepurple},
+		basicstyle=\ttfamily\footnotesize,
+		breakatwhitespace=false,         
+		breaklines=true,                 
+		captionpos=b,                    
+		keepspaces=true,                 
+		numbers=left,                    
+		numbersep=5pt,                  
+		showspaces=false,                
+		showstringspaces=false,
+		showtabs=false,                  
+		tabsize=2
+	}	
+
+	\lstset{style=codestyle}
+
+
 
 	\begin{document}
 
@@ -120,7 +156,10 @@
 
 \noindent
 
-Prohlašuji, že tato závěrečná maturitní práce je mým původním autorským dílem, které jsem vypracoval samostatně. Všechny zdroje, prameny a literaturu, které jsem při vypracování používal nebo z nich čerpal, v práci řádně cituji s uvedením úplného odkazu na příslušný zdroj.
+Prohlašuji, že tato závěrečná maturitní práce je mým původním autorským dílem,
+které jsem vypracoval samostatně. Všechny zdroje, prameny a literaturu, které
+jsem při vypracování používal nebo z nich čerpal, v práci řádně cituji
+s uvedením úplného odkazu na příslušný zdroj.
 
 \begin{center}
 Ve Slavičíně
@@ -219,59 +258,30 @@ konfiguraci systému.
 \chapter{Hardware}
 \section{Volba platformy}
 
-Před samotnou realizací bylo nutné zvážit různé hardwarové platformy, které by
-mohly být pro tento zálohovací systém vhodné. Do úvahy přicházely zejména tři
-hlavní kategorie: jednodeskové počítače (konkrétně Raspberry Pi 5), tradiční x86
-servery a komerční zařízení pro síťové úložiště dat (NAS). Raspberry Pi 5
+Co vlastně potřebujeme za platformu? Stačí nám počítač, který bude 
+schopný fungovat jako NAS server. Takový server nepotřebuje velký
+výpočetní výkon, můžeme tak využít i mikropočítače. 
+Nyní přichází v úvahu otázka - na čem to postavit? 
+
 
 \subsection{Raspberry Pi 5}
-
-Jednou z primárních výhod Raspberry Pi 5 pro tento projekt byla jeho dostupnost.
-Fakt, že jsem tento jednodeskový počítač již vlastnil a neměl pro něho využití,
-znamenal významnou úsporu nákladů, což bylo v souladu s hlavním cílem
-práce. Kromě toho se Raspberry Pi 5 vyznačuje nízkou spotřebou energie díky
-architektuře ARM. Podle dostupných informací se spotřeba energie Raspberry Pi 5
-v klidovém stavu pohybuje mezi 2.2W a 3.4W, přičemž při zátěži dosahuje
-přibližně 8.9W až 9.8W . Tato nízká spotřeba přispívá k nižším provozním
-nákladům systému v dlouhodobém horizontu, což dále podporuje myšlenku
-nízkonákladového řešení.  
 
 \begin{wrapfigure}{r}{0.4\textwidth}
 	\centering
 	\includegraphics[width=0.4\textwidth]{img/rpi5-active-cooler-c.jpg}
 	\caption{RPi 5 s aktivním chladičem}
 \end{wrapfigure}
+Jde o nejnovější verzi slavného mikropočítače, který má v sobě 4 jádrový ARM
+procesor. Tuto desku jsem již vlastnil, byla pro mě tedy jasným favoritem.
+Nakonec jsem ji použil právě pro tento projekt. Její spotřeba je opravdu nízká
+a pohybuje se kolem 3 Wattů v nečinnosti. 
 
-Na druhou stranu, Raspberry Pi 5 má i své nevýhody. Mezi nejvýznamnější patří
-absence nativních SATA portů, které jsou standardním rozhraním pro připojení
-pevných disků. Toto omezení vyžadovalo použití alternativních metod pro
-připojení úložného zařízení. Dalším aspektem bylo, že samotná deska Raspberry Pi
-5 vyžaduje ochranné pouzdro a způsob integrace s připojeným pevným diskem, což
-vedlo k potřebě navrhnout a vytisknout vlastní držák. Server x86
 
 \subsection{Server x86}
-Tradiční x86 servery nabízejí řadu výhod, které by mohly být pro zálohovací
-systém relevantní. Většina serverových základních desek disponuje několika SATA
-porty, což umožňuje přímé připojení více pevných disků. Servery jsou také obecně
-navrženy pro vysokou spolehlivost a nepřetržitý provoz. Jejich hardwarová
-architektura je optimalizována pro serverové úlohy, včetně ukládání dat, a často
-nabízejí rozsáhlé možnosti rozšíření, jako jsou další pozice pro disky, PCIe
-sloty a větší kapacita paměti RAM. Některé servery podporují i virtualizaci, což
-by sice pro jednoduchý zálohovací systém nebylo nutné, ale představuje další
-potenciální využití.
 
-Nicméně, x86 servery mají i své nevýhody, zejména v kontextu nízkonákladového
-projektu. Jednou z hlavních je vyšší spotřeba energie. Starší x86 servery mohou
-v klidovém stavu spotřebovávat odhadem až stovky Wattů , což je výrazně více
-než u Raspberry Pi 5. Tato vyšší spotřeba by znamenala vyšší provozní náklady,
-což by narušilo cíl nízkonákladového řešení. Dalším faktorem je
-pořizovací cena serveru, která i u starších nebo použitých modelů bývá vyšší než
-cena jednodeskového počítače, což by překročilo rozpočet studentského projektu.
-Navíc, výkon x86 serveru by
-pravděpodobně byl pro jednoduchý domácí zálohovací systém zbytečně vysoký.
-Komunity jako serverbuilds.net , B24, B25, B26) a r/homeserver)
-sice nabízejí návody na stavbu cenově dostupných serverů, ale celkové náklady by
-pravděpodobně stále byly vyšší než využití již vlastněného Raspberry Pi.  
+Rackové servery tradičního slova smyslu jsou pro projekty tohoto typu
+více než vhodné. Zkušenosti se servery tohoto typu
+jsem nasbíral na brigádách v lokálním ISP UnArtel. 
 
 \subsection{NAS zařízení}
 
@@ -303,47 +313,24 @@ praktických zkušeností s konfigurací hardwaru a softwaru při stavbě vlastn
 
 \section{Jak připojit disk k RPI 5?}
 
-Vzhledem k tomu, že Raspberry Pi 5 nedisponuje nativními SATA porty, bylo nutné
-zvolit alternativní způsob připojení pevného disku. Pro tento účel jsem zvažoval
-dvě možnosti: použití SATA rozšiřujícího modulu (HAT) připojeného přes
-PCIe rozhraní, nebo využití USB-to-SATA adaptéru, který může mít formu
-dokovací stanice.
+Nevýhoda Raspberry Pi je absence SATA rozhraní pro připojení disků.
+Musel jsem tak sáhnout po alternativním řešení v podobě 
+USB-to-SATA adaptéru značky AXAGON. Tato česká značka nabízí 
+velký sortiment příslušenství tohoto typu. Doma nám ležel v šuplíku
+USB HDD Dock této značky, jehož využití pro mě 
+bylo jasnou volbou.
 
-\subsection{SATA HAT}
-Jedním z dostupných SATA rozšiřujících modulů pro Raspberry Pi 5 je například
-Suptronics X1009 PCIe to 5-port SATA HDD Shield . Tento modul se připojuje k
-PCIe 2.0 rozhraní Raspberry Pi 5 a umožňuje připojení až pěti SATA 3.0 zařízení.
-Podporuje rychlost přenosu dat až 5 Gbps a dokáže napájet jak samotné Raspberry
-Pi, tak připojené disky. Je kompatibilní s oficiálním aktivním chladičem pro
-Raspberry Pi 5 a podporuje HAT+ STANDBY režim. Důležité je však poznamenat, že
-tento modul v současné době nepodporuje bootování z připojených HDD/SSD .
+Nejprve jsem ale musel vyzkoušet, jestli je tento dock kompatibilní 
+s Raspberry Pi. Ukázalo se, že je připojení bezproblémové, a tak
+jsem mohl začít testovat použité 2TB disky pocházející ze serverů
+firmy UnArtel. Spouštěl jsem testy S.M.A.R.T. pomocí programu smartctl.
 
-Použití SATA HAT by pravděpodobně zajistilo stabilnější přenos dat a nabídlo
-možnost připojení více disků, což by v budoucnu umožnilo implementaci RAID pro
-zvýšení spolehlivosti nebo výkonu. Nicméně, pořízení SATA HAT by znamenalo
-dodatečný náklad na projekt. Například Geekworm X1009 se prodává za cenu kolem
-60 USD. Navíc, pro použití SATA HAT s více disky by bylo nutné navrhnout a
-vyrobit vlastní rozsáhlejší pouzdro, které by pojmulo HAT, Raspberry Pi a
-všechny připojené disky, s ohledem na napájení a chlazení.  
+\begin{lstlisting}
+smartctl -t short /dev/device
+\end{lstlisting}
 
 
-\subsection{USB-to-SATA adaptér}
-Nakonec jsem se rozhodl pro použití USB dokovací stanice AXAGON ADSA-SN, USB 3.2
-Gen1 - SATA 6G, 2.5"/3.5" HDD/SSD. Tato dokovací stanice
-disponuje rozhraním USB 3.2 Gen1, které nabízí přenosové rychlosti až 5 Gbps,
-srovnatelné s SATA 3.0. Je kompatibilní s 2.5" i 3.5" SATA HDD a SSD. Hlavním
-důvodem pro tuto volbu byla skutečnost, že jsem tuto dokovací stanici již
-vlastnil, což znamenalo nulové dodatečné náklady a plně to
-odpovídalo cíli nízkonákladového řešení. Další výhodou je, že USB dokovací
-stanice obvykle nevyžadují instalaci speciálních ovladačů,
-což zjednodušuje proces nastavení.
 
-Mezi nevýhody patří, že po zapnutí dokovací stanice je připojený disk ve
-výchozím stavu vypnutý a je nutné jej ručně aktivovat stisknutím tlačítka. Také
-je možné do stanice připojit pouze jeden disk, což omezuje možnosti budoucího
-rozšíření a znemožňuje implementaci RAID. Nicméně, pro počáteční cíl vytvoření
-jednoduchého zálohovacího systému s jedním diskem představuje tato USB dokovací
-stanice funkční a nákladově nejefektivnější řešení.
 
 \section{Návrh držáku na RPI}
 
@@ -353,9 +340,9 @@ Dalším důležitým aspektem byla ochrana samotného Raspberry Pi 5 před mech
 poškozením a zkraty, což vyžadovalo umístění desky do nějakého pouzdra.
 
 \begin{figure}[h]
-\caption{Díly vytišténé na 3D tiskárně}
 \centering
-\includegraphics[width=0.5\textwidth]{img/dily-zvlast.jpg}
+\includegraphics[width=0.8\textwidth]{img/dily-zvlast.jpg}
+\caption{Díly vytišténé na 3D tiskárně}
 \end{figure}
 
 Pro návrh držáku jsem použil program Autodesk Fusion 360. V tomto softwaru jsem
@@ -364,9 +351,9 @@ Tuto vlastní navrženou objímku jsem následně spojil s existujícím krytem 
 Raspberry Pi 5, který jsem stáhnul z internetu. 
 
 \begin{figure}[h]
-\caption{Sestavená zálohovací stanice}
 \centering
 \includegraphics[width=0.9\textwidth]{img/skladani4.jpg}
+\caption{Sestavená zálohovací stanice}
 \end{figure}
 
 Použití hotového krytu pro Raspberry Pi mělo tu výhodu, že již zajišťoval
@@ -381,27 +368,45 @@ a vizuálně uspokojivé řešení pro integraci hardwaru.
 
 % TODO: kabely
 
+% Umístnění UnArtel, Gigabit
+
 \chapter{Software}
 
-Pro správu zálohovacího procesu bylo nezbytné vybrat vhodný zálohovací software.
-V úvahu přicházelo několik open-source řešení, která jsou kompatibilní s
-Raspberry Pi, jako například rsync, borgbackup nebo kopia.
+Pro správu zálohování bylo potřeba vybrat vhodný software. 
+V úvahu přicházelo několik open-source řešení jako například 
+Kopia, BorgBackup nebo Duplicati. Nakonec jsem vybral software 
+Kopia. 
 
-Nakonec jsem se rozhodl pro použití softwaru Kopia. Kopia je moderní open-source
-nástroj pro zálohování, který nabízí funkce jako šifrování, deduplikace,
-komprese a podporu různých úložišť. Instalace Kopia na domácím PC je poměrně jednoduchá, na Linuxových 
-distribucích jde stáhnout prostřednictvím správce balíčků.
+\begin{wrapfigure}{r}{0.4\textwidth}
+	\centering
+	\includegraphics[width=0.4\textwidth]{img/kopia.jpg}
+	\caption{Logo Kopia}
+\end{wrapfigure}
+Kopia je moderní nástroj, který vznikl v dílně Jarka Kowalského, 
+programátora z Googlu. Používá jazyk Go a je velmi dobře optimalizovaný.
+Zálohy jsou vytvářeny ve formě inkrementálních snapshotů,
+což znamená, že se po opakovaném spuštění nevytváří nová záloha, ale 
+připíšou se pouze změny a nově přidané soubory. Podporuje deduplikaci,
+díky čemuž je vícero kopií jednoho souboru ukládáno pouze jednou. 
+Zálohy jsou automaticky komprimované a šifrované, takže se nejen ušetří 
+místo, ale taky jsou data uložena bezpečně. Zato však hlavním tahákem pro mě
+byla podpora cloudu. Těší mě, když vím, že v případě vyčerpání místa na 
+zálohovacím HDD můžu v kopia změnit repozitář a začít tak zálohovat na 
+Google Drive.
+Kopia má celou řadu dalších výhod,
+které jsou popsány v dokumentaci na \url{https://kopia.io/docs/}.
 
-Pro vytvoření Kopia repozitáře jsem použil grafické rozhraní Kopia UI.
-Následně jsem nakonfiguroval zálohovací politiky, které
-definují, jaká data se mají zálohovat, jak často a kolik verzí se má uchovávat.
 
-Kopia běží na domácím PC a data ukládá na Raspberry Pi pomocí protokolu SFTP.
-Raspberry Pi tak plní funkci NASu a neběží na něm žádný zálohovací software.
 
-Výběr programu Kopia umožnil vytvořit robustní a funkcemi bohaté zálohovací
-řešení, které nabízí pokročilé funkce pro zajištění integrity a efektivity
-zálohování.  
+
+
+% SSH - vzdálené připojení k
+% RPi, Public Key authentication
+
+% Souborový systém
+% SSHFS
+
+% Psaní práce, Vim LaTex
 
 
 
@@ -417,6 +422,12 @@ zálohování.
 
 \chapter{Seznam zdrojů}
 
+% Kopia
+https://kopia.io/docs/features/
+https://github.com/kopia/kopia
+
+% testy disků - SmartCtl
+https://wiki.archlinux.org/title/S.M.A.R.T.
 
 \listoffigures
 
