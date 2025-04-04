@@ -9,6 +9,9 @@
 
 	\usepackage{wrapfig}
 
+	\usepackage{biblatex}
+	\addbibresource{refs.bib}
+
 	\usepackage{listings}
 	\usepackage{xcolor}
 
@@ -274,8 +277,7 @@ Nyní přichází v úvahu otázka - na čem to postavit?
 Jde o nejnovější verzi slavného mikropočítače, který má v sobě 4 jádrový ARM
 procesor. Tuto desku jsem již vlastnil, byla pro mě tedy jasným favoritem.
 Nakonec jsem ji použil právě pro tento projekt. Její spotřeba je opravdu nízká
-a pohybuje se kolem 3 Wattů v nečinnosti. 
-
+a pohybuje se kolem 3 Wattů v nečinnosti.  \cite{RPi-Power}
 
 \subsection{Server x86}
 
@@ -327,7 +329,7 @@ firmy UnArtel. Spouštěl jsem testy S.M.A.R.T. pomocí programu smartctl.
 
 \begin{lstlisting}
 smartctl -t short /dev/device
-\end{lstlisting}
+\end{lstlisting} 
 
 
 
@@ -384,13 +386,15 @@ Kopia.
 \end{wrapfigure}
 Kopia je moderní nástroj, který vznikl v dílně Jarka Kowalského, 
 programátora z Googlu. Používá jazyk Go a je velmi dobře optimalizovaný.
+\cite{Kopia-GitHub}
 Zálohy jsou vytvářeny ve formě inkrementálních snapshotů,
 což znamená, že se po opakovaném spuštění nevytváří nová záloha, ale 
 připíšou se pouze změny a nově přidané soubory. Podporuje deduplikaci,
 díky čemuž je vícero kopií jednoho souboru ukládáno pouze jednou. 
 Zálohy jsou automaticky komprimované a šifrované, takže se nejen ušetří 
-místo, ale taky jsou data uložena bezpečně. Zato však hlavním tahákem pro mě
-byla podpora cloudu. Těší mě, když vím, že v případě vyčerpání místa na 
+místo, ale taky jsou data uložena bezpečně. \cite{Kopia-Docs} Zato však hlavním
+tahákem pro mě byla podpora cloudu. Těší mě, když vím, že v případě vyčerpání
+místa na 
 zálohovacím HDD můžu v kopia změnit repozitář a začít tak zálohovat na 
 Google Drive.
 Kopia má celou řadu dalších výhod,
@@ -420,16 +424,17 @@ které jsou popsány v dokumentaci na \url{https://kopia.io/docs/}.
 \chapter{Závěr}
 
 
-\chapter{Seznam zdrojů}
 
-% Kopia
-https://kopia.io/docs/features/
-https://github.com/kopia/kopia
-
-% testy disků - SmartCtl
-https://wiki.archlinux.org/title/S.M.A.R.T.
+	\nocite{*}
+\printbibliography[
+	heading=bibintoc,
+	title={Seznam zdrojů}
+]
 
 \listoffigures
+\cleardoublepage
+% \phantomsection
+\addcontentsline{toc}{chapter}{Seznam obrázků}
 
 
 \chapter{Seznam příloh}
