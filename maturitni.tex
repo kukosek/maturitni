@@ -1,18 +1,23 @@
-			\documentclass[a4paper,12pt, oneside]{book}
+\documentclass[a4paper,12pt, oneside]{book}
 	\usepackage[czech]{babel}
 	\usepackage[utf8]{inputenc}
 
-		\DeclareUnicodeCharacter{202F}{FIX ME!!!!}
+	% Pokažené znaky, po Ctrl V z jiného dokumentu
+	% umožní najdení znaku, pak smazat
+	\DeclareUnicodeCharacter{202F}{FIX ME!!!!}
 
 	% Plugin na sloupce
 	\usepackage{multicol}
 
 	\usepackage{wrapfig}
 
+	% Zdroje a reference
 	\usepackage{biblatex}
 	\addbibresource{refs.bib}
 
+	% Zobrazování kodu
 	\usepackage{listings}
+
 	\usepackage{xcolor}
 
 	% Plugin na obrazky
@@ -44,6 +49,7 @@
 	\author{Lukáš Dulík}
 	\date{\today} % Tady sa pak moze nastavit jine datum, ted to da vzdycky aktualni
 
+	% Vytvoření proměnných, které budou přístupné z celého dokumentu
 	\makeatletter
 	\let\newtitle\@title
 	\let\newauthor\@author
@@ -55,6 +61,7 @@
 	\usepackage{fancyhdr}
 
 
+	% Záhlaví a zápatí
 	\fancyhf{}
 	\lhead{\topic}
 	\lfoot{Maturitní práce \schoolclass}
@@ -167,10 +174,12 @@ s uvedením úplného odkazu na příslušný zdroj.
 \begin{center}
 Ve Slavičíně
 
+% Proměnná s dnesnim datem
 \newdate
 
 \vspace{10mm}
 
+% Proměnná s autorem dokumentu
 \newauthor
 \end{center}
 
@@ -230,6 +239,9 @@ jedná se asi o 1 TB fotek a videí. Tyto data mám na HDD, které
 slouží již 10 let. Je na konci své životnosti a já nechci přijít o data,
 které na něm uchovávám. Proto jsem se rozhodl vytvořit funkční systém 
 pro zálohování.
+
+% TODO: Ransomware
+
 
 \section{Cíle projektu}
 
@@ -331,15 +343,22 @@ firmy UnArtel. Spouštěl jsem testy S.M.A.R.T. pomocí programu smartctl.
 smartctl -t short /dev/device
 \end{lstlisting} 
 
+Vypadalo to beznadějně, všechny disky vykazovaly vady. 
+Naštěstí jsem ale našel jeden disk, který fungoval bezproblémově.
+Připojil jsem ho k Raspberry Pi a pomocí nástroje
+\emph{fdisk} jsem ho formátoval a vytvořil nové oddíly.
+Poté jsem příkazem \emph{mkfs.ext4} udělal nový souborový systém.
 
 
 
-\section{Návrh držáku na RPI}
 
-Jedním z požadavků projektu bylo fyzické propojení Raspberry Pi 5 a USB dokovací
-stanice do jednoho celku. K tomuto účelu bylo nutné navrhnout speciální držák.
-Dalším důležitým aspektem byla ochrana samotného Raspberry Pi 5 před mechanickým
-poškozením a zkraty, což vyžadovalo umístění desky do nějakého pouzdra.
+\section{3D tištěný kryt}
+
+Především kvůli ochraně před poškozením obvodů jsem se rozhodl 
+sestrojit vlastní kryt. K návrhu jsem použil CAD software 
+Autodesk Fusion 360, k němuž mám jako student přístup zdarma.
+Hlavním cílem bylo spojit komponenty do jednoho celku.
+
 
 \begin{figure}[h]
 \centering
@@ -347,26 +366,32 @@ poškozením a zkraty, což vyžadovalo umístění desky do nějakého pouzdra.
 \caption{Díly vytišténé na 3D tiskárně}
 \end{figure}
 
-Pro návrh držáku jsem použil program Autodesk Fusion 360. V tomto softwaru jsem
-vytvořil objímku, která je navržena tak, aby pevně držela USB dokovací stanici.
-Tuto vlastní navrženou objímku jsem následně spojil s existujícím krytem pro
-Raspberry Pi 5, který jsem stáhnul z internetu. 
+Důležitým prvkem návrhu je objímka, která pevně drží USB dokovací stanici.
+Skládá se ze dvou dílů, které jsou spojeny šrouby M3. Jeden z dílů jsem
+spojil s
+\href{https://www.printables.com/model/705427-retro-raspberry-pi-5-case-snap-fit}{krytem
+na Raspberry Pi}, který jsem našel na internetu.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{img/skladani4-c.jpg}
+	\caption{Sestavená zálohovací stanice}
+	\end{figure}
+
+
+Po sestavení těchto dílů vypadalo celé zařízení velmi esteticky. 
+Podařilo se mi totiž napodobit tvar objímky i její barvu.
+Problém nastal až v momentě, kdy jsem propojil jednotlivé komponenty. 
+To přineslo kabelový chaos, který se mi zatím nepovedlo vyřešit.
+
+
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.9\textwidth]{img/skladani4.jpg}
-\caption{Sestavená zálohovací stanice}
+\includegraphics[width=0.9\textwidth]{img/zapojeni4.jpg}
+\caption{Připojení všech komponent včetně disku}
 \end{figure}
 
-Použití hotového krytu pro Raspberry Pi mělo tu výhodu, že již zajišťoval
-základní ochranu desky a měl esteticky přijatelný vzhled. Nevýhodou tohoto
-řešení je však správa kabelů. Propojení Raspberry Pi, dokovací stanice a jejich
-napájecích kabelů vyžaduje pečlivé uspořádání, aby nedocházelo k nepořádku a
-potenciálním problémům s konektivitou . 
-
-I přes tuto výzvu s kabelovým managementem, kombinace vlastního
-držáku pro dokovací stanici a staženého krytu pro Raspberry Pi poskytla funkční
-a vizuálně uspokojivé řešení pro integraci hardwaru.
 
 % TODO: kabely
 
@@ -425,19 +450,20 @@ které jsou popsány v dokumentaci na \url{https://kopia.io/docs/}.
 
 
 
-	\nocite{*}
+
+
+\nocite{*}
 \printbibliography[
 	heading=bibintoc,
 	title={Seznam zdrojů}
 ]
 
-\listoffigures
 \cleardoublepage
+\listoffigures
 % \phantomsection
 \addcontentsline{toc}{chapter}{Seznam obrázků}
 
 
-\chapter{Seznam příloh}
 
 
 \end{document}
