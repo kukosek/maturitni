@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt, oneside]{book}
+	\documentclass[a4paper,12pt, oneside]{book}
 	\usepackage[czech]{babel}
 	\usepackage[utf8]{inputenc}
 
@@ -12,8 +12,12 @@
 	\usepackage{wrapfig}
 
 	% Zdroje a reference
-	\usepackage{biblatex}
-	\addbibresource{refs.bib}
+	\usepackage[
+	  backend=biber,        % if we want unicode and many other features (biber is already by default)
+		  style=iso-numeric, % or another iso-<style>
+	]{biblatex}
+
+		\addbibresource{refs.bib}
 
 	% Zobrazování kodu
 	\usepackage{listings}
@@ -30,7 +34,7 @@
 		citecolor=black,
 		filecolor=black,
 		linkcolor=black,
-		urlcolor=black
+		urlcolor=blue
 	}
 
 	% Plugin na hezci nadpis kapitoly
@@ -111,56 +115,54 @@
     \begin{center}
         \vspace*{1cm}
 
-        \Huge
+        \Large
 		Gymnázium Jana Pivečky a Střední odborná škola Slavičín \\
 
 		% Logo GJP
 		\includegraphics[width=0.4\textwidth]{img/gjp.png}
 
-        \textbf{Maturitní práce}
+		\Huge \textbf{\topic}
 
         \vspace{0.5cm}
-        \LARGE
-        Téma: \topic
+        \Large
+        Maturitní práce
+
     \end{center}
+	\vspace{0.7cm}
+	\vspace{0.7cm}
 
-	\vspace{1.5cm}
-
-	% Vyplni zbyvaji prostor
+	\makeatletter
+	\begin{normalsize}
+	\null\hfill%
+	\begin{tabular}{p{3cm} p{7cm} }
+		Předmět: & Informatika \\
+		Vypracoval: & \@author \\ 
+		Školní rok:	& 2024/2025 \\
+		Třída: &	\schoolclass \\
+		Studijní obor:	& 7941K/81 Gymnázium	\\
+		Vedoucí práce:	& Mgr. Michal Botek \\
+		Oponent:	& Mgr. Ladislav Jurča 
+	\end{tabular}
+\end{normalsize}
+	\vspace{0.5cm}
 	\vfill
 
-	\vspace{0.8cm}
-
-	\vspace{5pt}
-	% Cara nahore
-	\hrule
-	\vspace{6pt}
+	
 
 	\Large
 
-	\makeatletter
-	\begin{multicols}{2}
-		\noindent
-		Slavičín \\
-		Datum: \@date
+	\begin{center}
+		Slavičín 2025
+	\end{center}
 
-	\columnbreak
-		\noindent
-		\null\hfill Třída: \schoolclass \\
-		\null\hfill \@author
-	\end{multicols}
 
 	\makeatother
 
 	\vspace{5pt}
 
-	% Cara dole
-	\hrule
 
 \end{titlepage}
 
-\newpage
-\mbox{}
 \newpage
 
 
@@ -186,8 +188,8 @@ Ve Slavičíně
 \newpage
 \section*{Abstrakt}
 
-Cílem této práce je podrobně popsat proces návrhu a realizace nízkonákladového
-systému pro zálohování dat.  Výsledný systém má sloužit pro zabezpečení důležitých
+Cílem této práce je popsat proces návrhu a realizace jednoduchého
+systému pro zálohování dat. Výsledný systém má sloužit pro zabezpečení důležitých
 dat prostřednictvím pravidelného zálohování.
 
 Základem navrženého zálohovacího systému je jednodeskový počítač Raspberry Pi 5,
@@ -227,19 +229,19 @@ Mnozí z nás uchovávají data na svém vlastním uložišti. Ať už to jsou
 fotky z dovolených nebo cenné pracovní dokumenty, mají pro nás vysokou hodnotu
 a proto o ně nechceme přijít. Máte vytvořenou zálohu svých dat? 
 
-Lidé jsou zvyklí ukládat své data na USB disky. Ruční zálohování má však své limity,
-proto se pojďmě podívat na způsob, jak dělat zálohování poctivě.
+Lidé jsou zvyklí ukládat data na USB disky. Ruční zálohování má však své limity,
+proto se pojďme podívat na způsob, jak dělat zálohování poctivě.
 
 
 \section{Vlastní motivace}
 
 Motivací pro napsání této práce byla nutnost vytvoření zálohy mého
 domácího PC. Uchovávám na něm mnoho cenných dat -
-jedná se asi o 1 TB fotek a videí. Tyto data mám na HDD, které
+jedná se asi o 1 TB fotek a videí. Tato data mám na HDD, které
 slouží již 10 let. Je na konci své životnosti a já nechci přijít o data,
 které na něm uchovávám. 
 
-Dalším důvodem byl taky fakt, že ransomwarové útoky jsou stále častější. Míří
+Dalším důvodem byl také fakt, že ransomwarové útoky jsou stále častější. Míří
 jak na státní instituce, tak na firmy a domácnosti. To přináší další rizika pro
 moje data. Proto jsem se rozhodl vytvořit funkční systém 
 pro zálohování.
@@ -250,11 +252,11 @@ pro zálohování.
 
 \section{Cíle projektu}
 
-Moje požadavky pro zálohovací systém byly následující. V závěru práce zhodnotíme, 
-jestli se podařily splnit.
+Moje požadavky pro zálohovací systém byly následující. V dalších
+kapitolách zhodnotíme, jestli se podařily splnit.
 
 \begin{enumerate}
-	\item Automatizace - Zálohy se vytváří automaticky ve stanovených intervalech
+	\item Automatizace - zálohy se vytváří automaticky ve stanovených intervalech
 	\item Nízká cena - co nejmenší počáteční i provozní náklady
 	\item Spolehlivost - systém nevykazuje chyby
 	\item Transparentnost - můžu sledovat průběh zálohování
@@ -305,33 +307,30 @@ jsem nasbíral na brigádách v lokálním ISP UnArtel.
 \subsection{NAS zařízení}
 
 Komerční NAS zařízení, jako například od společností Synology a QNAP, nabízejí
-uživatelsky přívětivé řešení pro síťové ukládání dat. Mezi jejich výhody patří
-jednoduchost použití, snadné zapojení a konfigurace. Obvykle obsahují
-integrovaný software pro zálohování, sdílení souborů a další funkce .  
-
-Na druhou stranu, NAS zařízení mají i své nevýhody. Často používají proprietární
-software, což omezuje možnosti přizpůsobení. Uživatel je také do jisté míry
-vázán na ekosystém daného výrobce. Nižší modely mohou mít omezené možnosti
-rozšíření. Navíc, použití komerčního NAS zařízení by pro tento projekt znamenalo
-menší příležitost k praktickému učení se o konfiguraci hardwaru a softwaru ve
-srovnání s vlastním sestavením systému . A co je nejdůležitější, pořizovací cena
-komerčního NAS zařízení by byla pravděpodobně vyšší než náklady na komponenty
-použité v tomto projektu, což by bylo v rozporu s cílem nízkonákladového řešení.  
+uživatelsky přívětivé řešení pro síťové ukládání dat. Kdybych 
+měl na starost zálohování firemních dat, možná bych sáhnul po komerčních
+produktech. Očekával bych, že budou vysoce spolehlivé a nenáročné na obsluhu.
+Nicméně pro moje účely se toto řešení nehodí. Roli hraje jak vysoká cena,
+tak nízká vzdělávací hodnota při použití již existujícího řešení.
 
 \subsection{Závěr}
 
 
 
-Na základě výše uvedených úvah jsem se rozhodl jako platformu pro svůj
-zálohovací systém použít Raspberry Pi 5. Hlavním důvodem byla jeho dostupnost
-, což přímo naplňuje
-požadavek na nízké náklady. Dalším významným faktorem byla příležitost k získání
-praktických zkušeností s konfigurací hardwaru a softwaru při stavbě vlastního
-řešení.
+Na základě výše uvedených úvah jsem se rozhodl pro svůj zálohovací systém použít
+platformu Raspberry Pi 5. Hlavním důvodem byla jeho dostupnost, což přímo
+naplňuje požadavek na nízké náklady. Dalším významným faktorem byla příležitost
+k získání praktických zkušeností s konfigurací hardwaru a softwaru při stavbě
+vlastního řešení.
 
 
 \section{Jak připojit disk k RPI 5?}
 
+\begin{wrapfigure}{r}{0.4\textwidth}
+	\centering
+	\includegraphics[width=0.4\textwidth]{img/axagon.jpg}
+	\caption{USB HDD Dock \href{https://www.axagon.eu/produkty/adsa-sn}{AXAGON ADSA-SN}}
+\end{wrapfigure}
 Nevýhoda Raspberry Pi je absence SATA rozhraní pro připojení disků.
 Musel jsem tak sáhnout po alternativním řešení v podobě 
 USB-to-SATA adaptéru značky AXAGON. Tato česká značka nabízí 
@@ -355,6 +354,7 @@ Připojil jsem ho k Raspberry Pi a pomocí nástroje
 Poté jsem příkazem \emph{mkfs.ext4} udělal nový souborový systém.
 
 
+\newpage
 
 
 \section{3D tištěný kryt}
@@ -389,6 +389,9 @@ Podařilo se mi totiž napodobit tvar objímky i její barvu.
 Problém nastal až v momentě, kdy jsem propojil jednotlivé komponenty. 
 To přineslo kabelový chaos, který se mi zatím nepovedlo vyřešit.
 
+Hotové zařízení jsem zapojil v serverovně UnArt, díky čemuž bude 
+záloha uložena mimo domov jako off-site backup.
+
 
 
 \begin{figure}[h]
@@ -404,6 +407,18 @@ To přineslo kabelový chaos, který se mi zatím nepovedlo vyřešit.
 
 \chapter{Software}
 
+\section{Vzdálené připojení}
+
+Po připojení RPi k internetu jsem se k němu připojil přes SSH, 
+abych ho mohl ovládat na dálku. OpenSSH server jsem zabezpečil zakázáním
+\emph{PasswordAuthentication} v konfiguračním souboru. K RPi se tak přihlašuji  
+veřejným klíčem. 
+
+Z mého domácího PC přistupuji k souborům na disku RPi pomocí SFTP.
+Tento protokol funguje nativně se serverem OpenSSH, a tak jsem už nemusel
+nic konfigurovat.
+
+\section{Správa zálohování}
 Pro správu zálohování bylo potřeba vybrat vhodný software. 
 V úvahu přicházelo několik open-source řešení jako například 
 Kopia, BorgBackup nebo Duplicati. Nakonec jsem vybral software 
@@ -414,6 +429,7 @@ Kopia.
 	\includegraphics[width=0.4\textwidth]{img/kopia.jpg}
 	\caption{Logo Kopia}
 \end{wrapfigure}
+
 Kopia je moderní nástroj, který vznikl v dílně Jarka Kowalského, 
 programátora z Googlu. Používá jazyk Go a je velmi dobře optimalizovaný.
 \cite{Kopia-GitHub}
@@ -430,35 +446,84 @@ Google Drive.
 Kopia má celou řadu dalších výhod,
 které jsou popsány v dokumentaci na \url{https://kopia.io/docs/}.
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=1\textwidth]{img/kopiaUI-Snapshots.jpg}
+\caption{Rozhraní KopiaUI}
+\end{figure}
 
 
+\section{Konfigurace Kopia}
+
+Po instalaci Kopia na mém domácí PC jsem mohl začít
+konfigurovat. Kopia má jednoduché a uživatelský přívětivé CLI rozhraní, které
+obsahuje příkazy pro vytvoření zálohovacího repozitáře (místo, kde jsou ukládány
+zálohy) i pro vytvoření samotných snapshotů. Postrádá však funkce pro
+naplánování zálohování. Ke konfiguraci jsem tak použil grafické rozhraní
+KopiaUI, které má v sobě funkce pro automatické spouštění zálohování ve
+stanovených intervalech. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1\textwidth]{img/kopiaUI-Policy.jpg}
+\caption{Nastavení frekvence zálohování v KopiaUI}
+\end{figure}
+
+\section{První snapshot}
+
+Když jsem poprvé spustil zálohování, byl jsem ohromen, jakou rychlostí se 
+snapshot tvořil. Rychlosti dosahovaly až 30 MB/s. V KopiaUI jsem viděl průběh
+zálohování i logy, ve kterých by se zobrazily případné chyby. Požadavky 
+na transparentnost byly tak rovněž splněny.
+
+\section{Chyby}
+
+Záloha i údržba repozitáře 
+se spouští v pravidelných intervalech. Občas ale nastane následující chyba: 
+\begin{lstlisting}
+sftp: "Failure" (SSH_FX_FAILURE)
+\end{lstlisting}
+
+Kopia mě vždy upozorní, když chyba nastane. 
+Potom je proces spuštěn znova a další pokus se podaří provést. 
+Tuto chybu se mi zatím nepodařilo vyřešit. Podezřívám z ní implementaci 
+sftp v softwaru Kopia, která mi připadá poněkud nestabilní. 
+Namísto sftp mám v plánu konfigurovat server NFS na RPi a připojit se k němu na
+mém PC.
 
 
-% SSH - vzdálené připojení k
-% RPi, Public Key authentication
+\newpage
+\section{Psaní maturitní práce}
 
-% Souborový systém
-% SSHFS
+\begin{wrapfigure}{r}{0.25\textwidth}
+	\centering
+	\includegraphics[width=0.25\textwidth]{img/LaTeX_logo.png}
+	\caption{Logo LaTeX}
+\end{wrapfigure}
 
-% Psaní práce, Vim LaTex
+K psaní maturitní práce jsem využil nástroj \emph{LaTeX}, který
+umožňuje sazbu textu ve vysoké typografické kvalitě. \cite{Latex-Wikipedia}  Je
+oblíbený na vysokých školách především pro jeho možnosti psaní matematických
+vzorců. 
 
 
-
-
-
-
+Textové soubory jsem upravoval v editoru \emph{Vim}, jehož hlavní výhodou je
+jeho způsob ovládání. Text se zde edituje bez
+použití myši. Využívá vlastní koncepci modálního editoru (to znamená, že se při
+práci s textovým dokumentem používá vícero různých režimů).
+\cite{Vim-Wikipedia}
 
 
 
 
 \chapter{Závěr}
 
-Projekt zálohovacího zařízení se podařilo dokončit. Nyní se nemusím bát napadení
-ransomwarem, jelikož budu mít vždy zálohu, ze které budu moct data obnovit.
-Doufám, že Vám přečtení této práce dodalo inspiraci k důslednějšímu zálohování 
-Vašich dat.
 
-% TODO: co bych udělal jinak
+Projekt zálohovacího zařízení se podařilo dokončit. 
+Nyní se nemusím bát napadení
+ransomwarem, jelikož budu mít vždy zálohu, ze které budu moct data obnovit.
+ Doufám, že Vám přečtení této práce dodalo inspiraci k
+důslednějšímu zálohování Vašich dat.
 
 
 
