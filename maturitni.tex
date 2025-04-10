@@ -46,6 +46,7 @@
 	\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
 
 
+
 	% Zakladni info o dokumento
 	\title{Zálohování a ochrana před ransomwarem}
 	\def\topic{Zálohování a ochrana před ransomwarem}
@@ -103,6 +104,8 @@
 	}	
 
 	\lstset{style=codestyle}
+
+
 
 
 
@@ -202,7 +205,7 @@ hardwarových prostředků. Konkrétně se jednalo o komponenty, které již neb
 aktivně používány a nacházely se v domácích zásobách.
 
 Tento přístup nejenže snížil finanční náročnost projektu, ale také umožnil
-prozkoumat možnosti repurposingu starší technologie pro nové účely.
+prozkoumat možnosti opětovného využití starší technologie pro nové účely.
 
 Realizace byla úspěšná a zálohovací systém se podařilo zprovoznit. Systém
 vykazuje rychlosti až 30 MB/s, což je pro vlastní účely adekvátní. Celkově 
@@ -226,8 +229,8 @@ se psaní této práce.
 
 Často opomíjené, ale v počítačových systémech nutné - to je zálohování.
 Mnozí z nás uchovávají data na svém vlastním uložišti. Ať už to jsou
-fotky z dovolených nebo cenné pracovní dokumenty, mají pro nás vysokou hodnotu
-a proto o ně nechceme přijít. Máte vytvořenou zálohu svých dat? 
+fotky z dovolených nebo cenné pracovní dokumenty, mají pro nás vysokou hodnotu, a proto 
+o ně nechceme přijít. Máte vytvořenou zálohu svých dat? 
 
 Lidé jsou zvyklí ukládat svá data na USB disky. Ruční zálohování má však své limity,
 proto se pojďme podívat na způsob, jak dělat zálohování poctivě.
@@ -239,7 +242,7 @@ Motivací pro napsání této práce byla nutnost vytvoření zálohy mého
 domácího PC. Uchovávám na něm mnoho cenných dat -
 jedná se asi o 1 TB fotek a videí. Tato data mám na HDD, které
 slouží již 10 let. Je na konci své životnosti a já nechci přijít o data,
-které na něm uchovávám. 
+která na něm uchovávám. 
 
 Dalším důvodem byl také fakt, že ransomwarové útoky jsou stále častější. Míří
 jak na státní instituce, tak na firmy a domácnosti. To přináší další rizika pro
@@ -252,8 +255,8 @@ pro zálohování.
 
 \section{Cíle projektu}
 
-Moje požadavky pro zálohovací systém byly následující. V dalších
-kapitolách zhodnotíme, jestli se podařily splnit.
+Cílem projektu bylo vytvořit systém pro zálohování počítačových dat. Moje
+požadavky pro zálohovací systém byly následující: 
 
 \begin{enumerate}
 	\item Automatizace - zálohy se vytváří automaticky ve stanovených intervalech
@@ -263,12 +266,16 @@ kapitolách zhodnotíme, jestli se podařily splnit.
 	\item Error handling - chybové záznamy jdou jednoduše přečíst
 \end{enumerate}
 
+V dalších kapitolách zhodnotíme, jestli se tyto
+požadavky podařily splnit.
+
+
 \section{Cloud vs On-Premise}
 
-Na trhu je mnoho cloudových řešení pro zálohování. 
-Ať už to jsou známé služby jako Google Drive a OneDrive, nebo 
-levnější alternativa v podobě Backblaze Backup, cloudové společnosti poskytují 
-spolehlivé řešení pro potřeby zálohování. Cena těchto služeb je však vysoká a pro moje účely nevýhodná. 
+Na trhu je mnoho cloudových řešení pro zálohování. Ať už to jsou známé služby
+jako Google Drive a OneDrive, nebo levnější alternativa v podobě Back\-blaze
+Backup, cloudové společnosti poskytují spolehlivé řešení pro potřeby zálohování.
+Cena těchto služeb je však vysoká a pro moje účely nevýhodná. 
 
 Kvůli vysoké ceně jsem se rozhodl vytvořit vlastní hardwarové řešení na
 zálohování (On-Premise).
@@ -287,15 +294,16 @@ výpočetní výkon, můžeme tak využít i mikropočítače.
 
 \subsection{Raspberry Pi 5}
 
-\begin{wrapfigure}{r}{0.4\textwidth}
-	\centering
-	\includegraphics[width=0.4\textwidth]{img/rpi5-active-cooler-c.jpg}
-	\caption{RPi 5 s aktivním chladičem}
-\end{wrapfigure}
-Jde o nejnovější verzi slavného mikropočítače, který má v sobě 4 jádrový ARM
+Jde o nejnovější verzi slavného mikropočítače, který má v sobě čtyřjádrový ARM
 procesor. Tuto desku jsem již vlastnil, byla pro mě tedy jasným favoritem.
 Nakonec jsem ji použil právě pro tento projekt. Její spotřeba je opravdu nízká
 a pohybuje se kolem 3 Wattů v nečinnosti.  \cite{RPi-Power}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{img/rpi5-active-cooler-c.jpg}
+	\caption{RPi 5 s aktivním chladičem}
+\end{figure}
 
 \subsection{Server x86}
 
@@ -325,17 +333,18 @@ vlastního řešení.
 
 \section{Jak připojit disk k RPI 5?}
 
-\begin{wrapfigure}{r}{0.4\textwidth}
-	\centering
-	\includegraphics[width=0.4\textwidth]{img/axagon.jpg}
-	\caption{USB HDD Dock \href{https://www.axagon.eu/produkty/adsa-sn}{AXAGON ADSA-SN}}
-\end{wrapfigure}
 Nevýhoda Raspberry Pi je absence SATA rozhraní pro připojení disků.
 Musel jsem tak sáhnout po alternativním řešení v podobě 
 USB-to-SATA adaptéru značky AXAGON. Tato česká značka nabízí 
 velký sortiment příslušenství tohoto typu. Doma nám ležel v šuplíku
 USB HDD Dock této značky, jehož využití pro mě 
 bylo jasnou volbou.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.4\textwidth]{img/axagon.jpg}
+	\caption{USB HDD Dock \href{https://www.axagon.eu/produkty/adsa-sn}{AXAGON ADSA-SN}}
+\end{figure}
 
 Nejprve jsem ale musel vyzkoušet, jestli je tento dock kompatibilní 
 s Raspberry Pi. Ukázalo se, že je připojení bezproblémové, a tak
@@ -350,10 +359,9 @@ Vypadalo to beznadějně, všechny disky vykazovaly vady.
 Naštěstí jsem ale našel jeden disk, který fungoval bezproblémově.
 Připojil jsem ho k Raspberry Pi a pomocí nástroje
 \emph{fdisk} jsem ho formátoval a vytvořil nové oddíly.
-Poté jsem příkazem \emph{mkfs.ext4} udělal nový souborový systém.
+Poté jsem příkazem \emph{mkfs.ext4} vytvořil nový souborový systém.
 
 
-\newpage
 
 
 \section{3D tištěný kryt}
@@ -367,7 +375,7 @@ Hlavním cílem bylo spojit komponenty do jednoho celku.
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.8\textwidth]{img/dily-zvlast.jpg}
-\caption{Díly vytišténé na 3D tiskárně}
+\caption{Díly vytištěné na 3D tiskárně}
 \end{figure}
 
 Důležitým prvkem návrhu je objímka, která pevně drží USB dokovací stanici.
@@ -410,7 +418,7 @@ záloha uložena mimo domov jako off-site backup.
 
 Po připojení RPi k internetu jsem se k němu připojil přes SSH, 
 abych ho mohl ovládat na dálku. OpenSSH server jsem zabezpečil zakázáním
-\emph{PasswordAuthentication} v konfiguračním souboru. K RPi se tak přihlašuji  
+\emph{Password\-Authentication} v konfiguračním souboru. K RPi se tak přihlašuji  
 veřejným klíčem. 
 
 Z mého domácího PC přistupuji k souborům na disku RPi pomocí SFTP.
@@ -419,7 +427,7 @@ nic konfigurovat.
 
 \section{Správa zálohování}
 Pro správu zálohování bylo potřeba vybrat vhodný software. 
-V úvahu přicházelo několik open-source řešení jako například 
+Zvažoval jsem několik open-source řešení jako například 
 Kopia, BorgBackup nebo Duplicati. Nakonec jsem vybral software 
 Kopia. 
 
@@ -437,10 +445,10 @@ což znamená, že se po opakovaném spuštění nevytváří nová záloha, ale
 připíšou se pouze změny a nově přidané soubory. Podporuje deduplikaci,
 díky čemuž je vícero kopií jednoho souboru ukládáno pouze jednou. 
 Zálohy jsou automaticky komprimované a šifrované, takže se nejen ušetří 
-místo, ale taky jsou data uložena bezpečně. \cite{Kopia-Docs} Zato však hlavním
+místo, ale také jsou data uložena bezpečně. \cite{Kopia-Docs} Zato však hlavním
 tahákem pro mě byla podpora cloudu. Těší mě, když vím, že v případě vyčerpání
 místa na 
-zálohovacím HDD můžu v kopia změnit repozitář a začít tak zálohovat na 
+zálohovacím HDD můžu v Kopia změnit repozitář a začít tak zálohovat na 
 Google Drive.
 Kopia má celou řadu dalších výhod,
 které jsou popsány v dokumentaci na \url{https://kopia.io/docs/}.
@@ -455,7 +463,7 @@ které jsou popsány v dokumentaci na \url{https://kopia.io/docs/}.
 \section{Konfigurace Kopia}
 
 Po instalaci Kopia na mém domácí PC jsem mohl začít
-konfigurovat. Kopia má jednoduché a uživatelský přívětivé CLI rozhraní, které
+konfigurovat. Kopia má jednoduché a uživatelsky přívětivé CLI rozhraní, které
 obsahuje příkazy pro vytvoření zálohovacího repozitáře (místo, kde jsou ukládány
 zálohy) i pro vytvoření samotných snapshotů. Postrádá však funkce pro
 naplánování zálohování. Ke konfiguraci jsem tak použil grafické rozhraní
@@ -468,12 +476,43 @@ stanovených intervalech.
 \caption{Nastavení frekvence zálohování v KopiaUI}
 \end{figure}
 
+\newpage
+
 \section{První snapshot}
 
 Když jsem poprvé spustil zálohování, byl jsem ohromen, jakou rychlostí se 
 snapshot tvořil. Rychlosti dosahovaly až 30 MB/s. V KopiaUI jsem viděl průběh
 zálohování i logy, ve kterých by se zobrazily případné chyby. Požadavky 
 na transparentnost byly tak rovněž splněny.
+
+\newpage
+
+\section{Výpočetní náročnost}
+
+Při vytváření snapshotu je CPU v mém PC zatíženo na 70 \%. Ačkoliv
+počítač stále reaguje a dá se na něm pokračovat v práci, jedná se o vysokou
+hodnotu. Vyšší náročnost na CPU je způsobena především funkcemi pro šifrování, kompresi
+a deduplikaci, které Kopia využívá. 
+
+Druhým důvodem je slabý výkon mého CPU. Jde o Intel Pentium G3258.
+Tento procesor byl vydán v roce 2014 a má pouze dvě jádra. 
+
+Ve výsledku mi ale vyšší výpočetní náročnost nevadí. 
+Algoritmy, které Kopia využívá, jsou podle mého názoru velmi dobře
+optimalizované. V praxi to znamená, že vytvoření snapshotu 1 TB složky, ve které
+nebylo nic změněno, trvá 30 sekund. Výpočetní čas je tak krátký a moje práce na
+PC tím není nijak narušena.
+
+
+CPU v Raspberry Pi je
+při vytváření snapshotu zatíženo pouze na 10 \%. Na rozdíl od mého PC na něm totiž
+neběží žádné složité výpočetní úlohy.
+
+
+
+% 30% proces
+% 70% zatížení procesoru
+% 10% zatížení RPi
 
 \section{Chyby}
 
@@ -484,14 +523,42 @@ sftp: "Failure" (SSH_FX_FAILURE)
 \end{lstlisting}
 
 Kopia mě vždy upozorní, když chyba nastane. 
-Potom je proces spuštěn znova a další pokus se podaří provést. 
+Potom je proces spuštěn znovu a další pokus se podaří provést. 
 Tuto chybu se mi zatím nepodařilo vyřešit. Podezřívám z ní implementaci 
-sftp v softwaru Kopia, která mi připadá poněkud nestabilní. 
-Namísto sftp mám v plánu konfigurovat server NFS na RPi a připojit se k němu na
+SFTP v softwaru Kopia, která mi připadá poněkud nestabilní. 
+Namísto SFTP mám v plánu konfigurovat server NFS na RPi a připojit se k němu na
 mém PC.
 
-
 \newpage
+
+\section{Obnovení dat}
+
+Obnovení dat pomocí Kopia je relativně jednoduché. Nabízí více možností,
+kterými lze data obnovit. 
+
+Prvním krokem je výběr snapshotu, ze kterého chceme požadovaná data obnovit.
+Například pokud vím, že ke ztrátě dat došlo dnes ráno, vyberu snapshot ze 
+včerejšího večera.
+
+Dále představím příklady situací, ve kterých dojde
+ke ztrátě dat, a ukážu vhodné způsoby, jak tato data obnovit v rozhraní
+KopiaUI.
+
+\begin{enumerate}
+	\item \textbf{Smazání souboru nebo nechtěná úprava souboru} \\
+		V takovém případě Kopia nabízí funkci pro obnovu jednotlivých 
+		souborů. V KopiaUI lze otevřít vybraný snapshot,
+		najít v něm soubor, který chci obnovit, a uložit ho
+		do libovolného adresáře.
+	\item \textbf{Selhání disku, poškození souborového systému, nebo napadení
+		ransomwarem} \\
+		V případě, že by uživatel preferoval obnovení celého snapshotu,
+		Kopia nabízí dvě možnosti. První z nich data extrahuje do vybraného
+		adresáře. Druhou možností je připojení snapshotu, vznikne tak lokální
+		souborový systém.
+\end{enumerate}
+
+
 \section{Psaní maturitní práce}
 
 \begin{wrapfigure}{r}{0.25\textwidth}
@@ -508,7 +575,7 @@ vzorců.
 
 Textové soubory jsem upravoval v editoru \emph{Vim}, jehož hlavní výhodou je
 jeho způsob ovládání. Text se zde edituje bez
-použití myši. Využívá vlastní koncepci modálního editoru (to znamená, že se při
+použití myši. Využívá koncepci modálního editoru (to znamená, že se při
 práci s textovým dokumentem používá vícero různých režimů).
 \cite{Vim-Wikipedia}
 
@@ -522,16 +589,17 @@ Celá práce včetně zdrojových souborů je dostupná na mém GitHubu:
 
 
 Projekt zálohovacího zařízení se podařilo dokončit. 
-Nyní se nemusím bát napadení
-ransomwarem, jelikož budu mít vždy zálohu, ze které budu moct data obnovit.
+Nyní budu mít v případě ransomwarového útoku připravenou zálohu,
+ze které budu moct data obnovit.
 
-V budoucnosti bych se nebál tento projekt zopakovat. Přemýšlím také 
-o upgradu stávajícího řešení. Příště bych chtěl postavit vlastní server,
-musel bych mít ale větší rozpočet. Taktéž by šlo na tuto práci navázat 
-na půdě školy, a to například vytvořením školní zálohovací strategie.
+V budoucnu bych se nebál tento projekt zopakovat. Přemýšlím také o upgradu
+stávajícího řešení, kterému chybí podpora zrcadlení disků. Chtěl bych postavit
+vlastní server, který by měl tuto funkci. Musel bych k tomu mít větší
+rozpočet. Taktéž by šlo na tuto práci navázat na půdě školy, a to například
+vytvořením školní zálohovací strategie.
 
- Doufám, že Vám přečtení této práce dodalo inspiraci k
-důslednějšímu zálohování Vašich dat.
+Doufám, že vám tato práce poskytla inspiraci k důslednějšímu zálohování vašich
+dat.
 
 
 
