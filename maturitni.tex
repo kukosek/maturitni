@@ -226,10 +226,10 @@ se psaní této práce.
 
 Často opomíjené, ale v počítačových systémech nutné - to je zálohování.
 Mnozí z nás uchovávají data na svém vlastním uložišti. Ať už to jsou
-fotky z dovolených nebo cenné pracovní dokumenty, mají pro nás vysokou hodnotu
+fotky z dovolených nebo cenné pracovní dokumenty, mají pro nás vysokou hodnotu
 a proto o ně nechceme přijít. Máte vytvořenou zálohu svých dat? 
 
-Lidé jsou zvyklí ukládat data na USB disky. Ruční zálohování má však své limity,
+Lidé jsou zvyklí ukládat svá data na USB disky. Ruční zálohování má však své limity,
 proto se pojďme podívat na způsob, jak dělat zálohování poctivě.
 
 
@@ -283,7 +283,6 @@ konfiguraci systému.
 Co vlastně potřebujeme za platformu? Stačí nám počítač, který bude 
 schopný fungovat jako NAS server. Takový server nepotřebuje velký
 výpočetní výkon, můžeme tak využít i mikropočítače. 
-Nyní přichází v úvahu otázka - na čem to postavit? 
 
 
 \subsection{Raspberry Pi 5}
@@ -361,7 +360,7 @@ Poté jsem příkazem \emph{mkfs.ext4} udělal nový souborový systém.
 
 Především kvůli ochraně před poškozením obvodů jsem se rozhodl 
 sestrojit vlastní kryt. K návrhu jsem použil CAD software 
-Autodesk Fusion 360, k němuž mám jako student přístup zdarma.
+Autodesk Fusion 360, k němuž mám jako student přístup zdarma.
 Hlavním cílem bylo spojit komponenty do jednoho celku.
 
 
@@ -458,7 +457,7 @@ které jsou popsány v dokumentaci na \url{https://kopia.io/docs/}.
 Po instalaci Kopia na mém domácí PC jsem mohl začít
 konfigurovat. Kopia má jednoduché a uživatelský přívětivé CLI rozhraní, které
 obsahuje příkazy pro vytvoření zálohovacího repozitáře (místo, kde jsou ukládány
-zálohy) i pro vytvoření samotných snapshotů. Postrádá však funkce pro
+zálohy) i pro vytvoření samotných snapshotů. Postrádá však funkce pro
 naplánování zálohování. Ke konfiguraci jsem tak použil grafické rozhraní
 KopiaUI, které má v sobě funkce pro automatické spouštění zálohování ve
 stanovených intervalech. 
@@ -513,6 +512,9 @@ použití myši. Využívá vlastní koncepci modálního editoru (to znamená, 
 práci s textovým dokumentem používá vícero různých režimů).
 \cite{Vim-Wikipedia}
 
+Celá práce včetně zdrojových souborů je dostupná na mém GitHubu:
+\url{https://github.com/kukosek/maturitni/}
+
 
 
 
@@ -522,6 +524,14 @@ práci s textovým dokumentem používá vícero různých režimů).
 Projekt zálohovacího zařízení se podařilo dokončit. 
 Nyní se nemusím bát napadení
 ransomwarem, jelikož budu mít vždy zálohu, ze které budu moct data obnovit.
+
+V budoucnosti bych se nebál tento projekt zopakovat. Přemýšlím také 
+o upgradu stávajícího řešení. Příště bych chtěl postavit vlastní server,
+musel bych mít ale větší rozpočet. 
+
+Taktéž by šlo na tuto práci navázat 
+na půdě školy, a to například vytvořením školní zálohovací strategie.
+
  Doufám, že Vám přečtení této práce dodalo inspiraci k
 důslednějšímu zálohování Vašich dat.
 
